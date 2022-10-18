@@ -2,5 +2,5 @@
     "version": "0.0.1",
     "name": "Sound Machine",
     "notes": "Simple sound machine to play white sound on different devices",
-    "install_script": "yarn install --cwd frontend"
+    "install_script": "cd frontend && yarn install && npm run build"
 }
