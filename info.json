@@ -2,5 +2,5 @@
     "version": "0.0.1",
     "name": "Sound Machine",
     "notes": "Simple sound machine to play white sound on different devices",
-    "install_script": "cd frontend && yarn install && npm run build"
+    "install_script": "cd frontend && yarn install && npm run build && cd .. && cd media && wget -O white.mp3 \"https://mc2method.org/white-noise/download.php?file=03-White-Noise&length=60\""
 }
