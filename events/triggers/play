@@ -4,4 +4,10 @@ set -euo pipefail
 PROJECT_ROOT="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")"/../..)"
 
 sink="$1"
-mpg123 --loop -1 -a "${sink}" "${PROJECT_ROOT}"/media/white.mp3 >/dev/null 2>&1 &
+
+player=mpg123
+if command -v mpg123-pulse &> /dev/null
+then
+    player=mpg123-pulse
+fi
+"${player}" --loop -1 -a "${sink}" "${PROJECT_ROOT}"/media/white.mp3 >/dev/null 2>&1 &
