@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-pactl -f json list sinks
+#pactl list short sinks | jq -R 'gsub("\\s+";" ";"g") | split(" ") | del(.[2,3,4,5]) | to_entries | [.[] | .["key"] = (if .key == 0 then "index" elif .key == 1 then "name" elif .key == 2 then "state" else .key end)] | from_entries'
+
+pactl list sinks | grep -e "Sink \|State:\|Name:\|Description:\|Mute:\|Volume:" | grep -v "Base Volume:" | sed "s/#/index:/" | sed "s/.*\(Volume:[^,]*%\).*/\1/" | sed "s/front-left:.*\/.//" | jq -Rs 'split("Sink ") | map(select(length > 0)) | [.[] | split("\n") | map(capture("(?<key>[^:\n]+):(?<value>[^:\n]+)";"g") | .key |= (. | ascii_downcase | gsub("^\\s+|\\s+$";"")) | .value |= (. | gsub("^\\s+|\\s+$";"")))] | [.[] | from_entries]'

@@ -29,7 +29,10 @@
           <label><strong>State:</strong></label> {{ currentSink.state }}
         </div>
         <div>
-          <label><strong>Volume:</strong></label> Left: {{ currentSink.volume['front-left'].value_percent }} Right: {{ currentSink.volume['front-right'].value_percent }}
+          <label><strong>Muted:</strong></label> {{ currentSink.mute }}
+        </div>
+        <div>
+          <label><strong>Volume:</strong></label> {{ currentSink.volume }}
         </div>
         <div>
           <button class="btn btn-outline-secondary" type="button" @click="play">Play</button>
@@ -90,9 +93,9 @@ export default {
     },
 
     volume(volume) {
-      let currentVolume = parseInt(this.currentSink.volume['front-left'].value_percent);
-      this.currentSink.volume['front-left'].value_percent = (currentVolume + volume) + '%';
-      this.currentSink.volume['front-right'].value_percent = (currentVolume + volume) + '%';
+      let currentVolume = parseInt(this.currentSink.volume);
+      this.currentSink.volume = (currentVolume + volume) + '%';
+      this.currentSink.volume = (currentVolume + volume) + '%';
       DeviceService.volume(this.currentSink.name, currentVolume + volume)
           .then(response => {
             console.log(response.data);
