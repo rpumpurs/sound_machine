@@ -10,4 +10,4 @@ if command -v mpg123-pulse &> /dev/null
 then
     player=mpg123-pulse
 fi
-"${player}" --loop -1 -a "${sink}" "${PROJECT_ROOT}"/media/white.mp3 >/dev/null 2>&1 &
+"${player}" --loop --mono -b 1024 -1 -a "${sink}" "${PROJECT_ROOT}"/media/white.mp3 >/dev/null 2>&1 &
