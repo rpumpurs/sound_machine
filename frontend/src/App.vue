@@ -43,9 +43,33 @@ export default {
     getUptime() {
       DeviceService.getUptime()
           .then(response => {
-            let date = new Date(0);
-            date.setSeconds(response.data);
-            this.uptime = date.toISOString().substring(11, 19);
+
+            let secondsToStr = function secondsToStr (seconds) {
+              function numberEnding (number) {
+                return (number > 1) ? 's' : '';
+              }
+
+              let temp = response.data;
+              let years = Math.floor(temp / 31536000);
+              if (years) {
+                return years + ' year' + numberEnding(years);
+              }
+              let days = Math.floor((temp %= 31536000) / 86400);
+              if (days) {
+                return days + ' day' + numberEnding(days);
+              }
+              let hours = Math.floor((temp %= 86400) / 3600);
+              if (hours) {
+                return hours + ' hour' + numberEnding(hours);
+              }
+              let minutes = Math.floor((temp %= 3600) / 60);
+              if (minutes) {
+                return minutes + ' minute' + numberEnding(minutes);
+              }
+              return seconds + ' second' + numberEnding(seconds);
+            }
+
+            this.uptime = secondsToStr(response.data);
             console.log(response.data);
           })
           .catch(e => {
