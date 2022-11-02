@@ -10,4 +10,7 @@ if command -v mpg123-pulse &> /dev/null
 then
     player=mpg123-pulse
 fi
+
+pgrep -f "mpg123.*${sink}" | xargs kill 2> /dev/null || true
+
 "${player}" --loop -1 --mono --buffer 1024 -a "${sink}" "${PROJECT_ROOT}"/media/white.mp3 >/dev/null 2>&1 &
